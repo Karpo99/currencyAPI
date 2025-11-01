@@ -26,10 +26,10 @@ public class WebClientConfig {
     @Value("${mock.api.base-url}")
     private String baseUrl;
 
-    @Value("${mock.api.secret.key}")
+    @Value("${mock.api.secret-key}")
     private String apiSecretKey;
 
-    @Value("${api.timeout}")
+    @Value("${mock.api.timeout}")
     private int timeout;
 
     @Bean

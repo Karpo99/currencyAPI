@@ -1,11 +1,11 @@
 package org.example.currencyapi.model.dto.external;
 
 import java.math.BigDecimal;
-import java.util.Map;
 import lombok.Data;
 
 @Data
-public class FiatApiDto {
+public class CryptoApiResponse {
 
-    private Map<String, BigDecimal> rates;
+    private String name;
+    private BigDecimal value;
 }

@@ -1,6 +1,47 @@
 spring:
   application:
     name: CurrencyApi
+ # Database connection
+  r2dbc:
+    url:
+      r2dbc:mysql://localhost:3306/test
+    username: root
+    password: yamaha
+  sql:
+    init:
+      mode: always
+ # Server port
 server:
   port: 8081
+ # Mock properties for external API
+mock:
+  crypto-api:
+    endpoint: crypto-currency-rates
+  fiat-api:
+    endpoint: fiat-currency-rates
+  api:
+    base-url: http://localhost:8080
+    secret-key: secret-key
+    timeout: 5000
 
+ # Resilience4j configuration
+resilience4j:
+  circuitbreaker:
+    instances:
+      fiatClient:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10000
+      cryptoClient:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10000
+
+  retry:
+    instances:
+      fiatClient:
+        max-attempts: 3
+        wait-duration: 1000
+      cryptoClient:
+        max-attempts: 3
+        wait-duration: 1000
