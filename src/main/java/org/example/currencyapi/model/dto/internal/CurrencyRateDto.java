@@ -1,10 +1,12 @@
-package org.example.currencyapi.model.dto.responses.internal;
+package org.example.currencyapi.model.dto.internal;
 
 import java.math.BigDecimal;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class CurrencyRateResponse {
+@Builder
+public class CurrencyRateDto {
     private String currency;
     private BigDecimal rate;
 }
