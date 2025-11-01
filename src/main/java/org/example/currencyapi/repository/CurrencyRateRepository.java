@@ -6,5 +6,5 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
 
 public interface CurrencyRateRepository extends ReactiveCrudRepository<CurrencyRateEntity, Long> {
-    Flux<CurrencyRateDto> findByCurrencyType(String currencyType);
+    Flux<CurrencyRateEntity> findByCurrencyType(String currencyType);
 }
