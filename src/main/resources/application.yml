@@ -3,8 +3,7 @@ spring:
     name: CurrencyApi
  # Database connection
   r2dbc:
-    url:
-      r2dbc:mysql://localhost:3306/test
+    url: r2dbc:mysql://localhost:3306/test
     username: root
     password: yamaha
   sql:
@@ -28,20 +27,20 @@ mock:
 resilience4j:
   circuitbreaker:
     instances:
-      fiatClient:
+      fiatRatesClient:
         sliding-window-size: 10
         failure-rate-threshold: 50
         wait-duration-in-open-state: 10000
-      cryptoClient:
+      cryptoRatesClient:
         sliding-window-size: 10
         failure-rate-threshold: 50
         wait-duration-in-open-state: 10000
 
   retry:
     instances:
-      fiatClient:
+      fiatRatesClient:
         max-attempts: 3
         wait-duration: 1000
-      cryptoClient:
+      cryptoRatesClient:
         max-attempts: 3
         wait-duration: 1000

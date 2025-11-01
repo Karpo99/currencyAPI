@@ -34,7 +34,6 @@ public class WebClientConfig {
 
     @Bean
     public WebClient buildWebClient() {
-        //Timeout configuration
         HttpClient httpClient = HttpClient.create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, timeout)
                 .responseTimeout(Duration.ofMillis(timeout))

@@ -1,4 +1,4 @@
-package org.example.currencyapi.service;
+package org.example.currencyapi.service.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.currencyapi.model.dto.internal.CurrencyRateDto;
 import org.example.currencyapi.model.dto.internal.CurrencyRatesDto;
 import org.example.currencyapi.model.enums.CurrencyType;
+import org.example.currencyapi.service.CurrencyRateService;
 import org.example.currencyapi.service.client.CurrencyRatesClient;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -39,7 +40,7 @@ public class CurrencyRatesAggregatorService {
                             .build();
                 })
                 .doOnError(ex ->
-                        log.warn("Error in aggregation"));
+                        log.warn("Error in aggregation: {}", ex.getMessage()));
 
     }
 

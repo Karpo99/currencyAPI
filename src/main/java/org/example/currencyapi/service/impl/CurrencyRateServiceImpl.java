@@ -71,18 +71,15 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
         log.info("Saving {} rates to DB", currencyType);
 
         return Flux.fromIterable(ratesList)
-                .flatMap(dto -> {
-                    CurrencyRateEntity entity = CurrencyRateEntity.builder()
-                            .currency(dto.getCurrency())
-                            .rate(dto.getRate())
-                            .currencyType(currencyType.name())
-                            .createdAt(LocalDateTime.now())
-                            .build();
-                    return currencyRateRepository.save(entity);
-                })
-                .doOnNext(savedEntity -> {
-                    log.info("Saved {}, {}", savedEntity.getCurrencyType(), savedEntity.getCurrency());
-                })
+                .map(dto -> CurrencyRateEntity.builder()
+                        .currency(dto.getCurrency())
+                        .rate(dto.getRate())
+                        .currencyType(currencyType.name())
+                        .createdAt(LocalDateTime.now())
+                        .build())
+                .as(currencyRateRepository::saveAll)
+                .doOnNext(saved ->
+                        log.info("Saved {}, {}", saved.getCurrencyType(), saved.getCurrency()))
                 .then();
     }
 }
