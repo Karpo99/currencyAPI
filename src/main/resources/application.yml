@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: CurrencyApi
+server:
+  port: 8081
+
