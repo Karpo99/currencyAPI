@@ -56,11 +56,11 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
                     if (list.isEmpty()) {
                         log.warn("DB is empty for {}, returning an empty array", currencyType);
                     } else {
-                        log.info("Fetched {} rates from DB", currencyType);
+                        log.info("Fetched {} {} rates from DB", currencyType, list.size());
                     }
                 })
                 .onErrorResume(error -> {
-                    log.error("Database error while reading {} rates", currencyType, error);
+                    log.error("Database error while reading {} {} rates", currencyType, error);
 
                     return Mono.just(List.of());
                 });
