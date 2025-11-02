@@ -45,7 +45,7 @@ public class FiatRatesClient implements CurrencyRatesClient {
     }
 
     private Flux<CurrencyRateDto> fallbackFetchRatesFromDb(Throwable throwable) {
-        log.warn("Fiat API fallback triggered {}", fiatApiEndpoint, throwable.getClass().getSimpleName());
+        log.warn("Fiat API fallback triggered {} {}", fiatApiEndpoint, throwable.getClass().getSimpleName());
         log.info("Returning empty Flux, proceed db fallback from service layer");
         return Flux.empty();
     }

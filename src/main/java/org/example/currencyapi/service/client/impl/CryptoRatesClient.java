@@ -47,7 +47,7 @@ public class CryptoRatesClient implements CurrencyRatesClient {
     }
 
     private Flux<CurrencyRateDto> fallbackFetchRatesFromDb(Throwable throwable) {
-        log.warn("CRYPTO API fallback triggered {}", cryptoApiEndpoint, throwable);
+        log.warn("CRYPTO API fallback triggered {} {}", cryptoApiEndpoint, throwable.getClass().getSimpleName());
         log.info("Returning empty Flux, proceed db fallback from service layer");
         return Flux.empty();
     }
