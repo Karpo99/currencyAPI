@@ -1,8 +1,3 @@
-
-Новий
-+27
--0
-
 # Currency API
 
 Currency API is a Spring Boot 3 reactive service that aggregates fiat and cryptocurrency exchange rates. It uses R2DBC for MySQL access and Liquibase for database migrations.
