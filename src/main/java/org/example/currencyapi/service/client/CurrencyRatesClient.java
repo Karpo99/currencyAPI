@@ -6,5 +6,6 @@ import reactor.core.publisher.Flux;
 
 public interface CurrencyRatesClient {
     Flux<CurrencyRateDto> fetchRates();
+
     CurrencyType getCurrencyType();
 }

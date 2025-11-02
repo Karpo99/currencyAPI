@@ -2,7 +2,7 @@ package org.example.currencyapi.service.impl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.currencyapi.model.dto.internal.CurrencyRateDto;
 import org.example.currencyapi.model.dto.internal.CurrencyRatesDto;
@@ -14,16 +14,10 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CurrencyRatesAggregatorService {
     private final CurrencyRateService currencyRateService;
     private final Map<CurrencyType, CurrencyRatesClient> currencyRatesClientMap;
-
-    public CurrencyRatesAggregatorService(CurrencyRateService currencyRateService, List<CurrencyRatesClient> clients) {
-        this.currencyRateService = currencyRateService;
-        this.currencyRatesClientMap = clients.stream()
-                .collect(Collectors.toMap(
-                        CurrencyRatesClient::getCurrencyType, client -> client));
-    }
 
     public Mono<CurrencyRatesDto> getAllCurrencyRates() {
         Mono<List<CurrencyRateDto>> fiatRates = fetchRatesForType(CurrencyType.FIAT);

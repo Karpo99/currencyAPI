@@ -8,7 +8,7 @@ spring:
     username: root
     password: yamaha
 
- #DB migration
+  #DB migration
   liquibase:
     url: jdbc:mysql://localhost:3306/test
     user: root
