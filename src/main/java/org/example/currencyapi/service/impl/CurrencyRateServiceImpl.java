@@ -26,7 +26,7 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
                 .flatMap(ratesList -> {
 
                     if (!ratesList.isEmpty()) {
-                        log.info("API returned {} rates, saving to DB", currencyType);
+                        log.info("API returned {} {} rates, saving to DB", ratesList.size(), currencyType);
 
                         return saveRatesToDatabase(ratesList, currencyType)
                                 .thenReturn(ratesList);
@@ -36,8 +36,8 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
                         return fetchFromDatabase(currencyType);
                     }
                 })
-                .onErrorResume(error -> {
-                    log.warn("Unexpected fail during processing {} rates, attempting fallback to DB", currencyType);
+                .onErrorResume(ex -> {
+                    log.warn("Unexpected fail during processing {} rates, attempting fallback to DB", currencyType, ex);
 
                     return fetchFromDatabase(currencyType);
                 });
@@ -60,8 +60,7 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
                     }
                 })
                 .onErrorResume(error -> {
-                    log.warn("Database error for {}: {} - returning empty list",
-                            currencyType, error.getMessage());
+                    log.error("Database error while reading {} rates", currencyType, error);
 
                     return Mono.just(List.of());
                 });
@@ -79,7 +78,7 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
                         .build())
                 .as(currencyRateRepository::saveAll)
                 .doOnNext(saved ->
-                        log.info("Saved {}, {}", saved.getCurrencyType(), saved.getCurrency()))
+                        log.debug("Saved {} rate {}={}", currencyType, saved.getCurrency(), saved.getRate()))
                 .then();
     }
 }

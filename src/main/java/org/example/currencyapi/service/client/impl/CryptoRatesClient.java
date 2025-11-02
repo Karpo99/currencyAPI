@@ -31,7 +31,7 @@ public class CryptoRatesClient implements CurrencyRatesClient {
                 .retrieve()
                 .bodyToFlux(CryptoApiResponse.class)  // because response = JSON array
                 .doOnSubscribe(sub -> log.info("Fetching CRYPTO rates..."))
-                .doOnError(ex -> log.warn("Error receiving CRYPTO rates: {}", ex.getMessage()))
+                .doOnError(ex -> log.warn("Failed to call CRYPTO endpoint: {}", cryptoApiEndpoint, ex))
                 .doOnComplete(() -> log.info("Successfully received CRYPTO rates"))
                 .map(dto -> CurrencyRateDto.builder()
                         .currency(dto.getName())
@@ -47,7 +47,7 @@ public class CryptoRatesClient implements CurrencyRatesClient {
     }
 
     private Flux<CurrencyRateDto> fallbackFetchRatesFromDb(Throwable throwable) {
-        log.warn("Crypto API fallback triggered {}", throwable.getMessage());
+        log.warn("CRYPTO API fallback triggered {}", cryptoApiEndpoint, throwable);
         log.info("Returning empty Flux, proceed db fallback from service layer");
         return Flux.empty();
     }

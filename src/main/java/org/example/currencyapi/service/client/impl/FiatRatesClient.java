@@ -31,7 +31,7 @@ public class FiatRatesClient implements CurrencyRatesClient {
                 .retrieve()
                 .bodyToFlux(FiatApiResponse.class)  // because response = JSON array
                 .doOnSubscribe(sub -> log.info("Fetching FIAT rates..."))
-                .doOnError(ex -> log.warn("Error receiving FIAT rates: {}", ex.getMessage()))
+                .doOnError(ex -> log.warn("Failed to call FIAT endpoint: {}", fiatApiEndpoint, ex))
                 .doOnComplete(() -> log.info("Successfully received FIAT rates"))
                 .map(dto -> CurrencyRateDto.builder()
                         .currency(dto.getCurrency())
@@ -45,7 +45,7 @@ public class FiatRatesClient implements CurrencyRatesClient {
     }
 
     private Flux<CurrencyRateDto> fallbackFetchRatesFromDb(Throwable throwable) {
-        log.warn("Fiat API fallback triggered {}", throwable.getMessage());
+        log.warn("Fiat API fallback triggered {}", fiatApiEndpoint, throwable);
         log.info("Returning empty Flux, proceed db fallback from service layer");
         return Flux.empty();
     }

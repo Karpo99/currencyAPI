@@ -34,7 +34,7 @@ public class CurrencyRatesAggregatorService {
                             .build();
                 })
                 .doOnError(ex ->
-                        log.warn("Error in aggregation: {}", ex.getMessage()));
+                        log.warn("Error in aggregation", ex));
 
     }
 

@@ -2,25 +2,21 @@ spring:
   application:
     name: CurrencyApi
 
-  # Database connection
   r2dbc:
-    url: r2dbc:mysql://localhost:3306/test
+    url: r2dbc:pool:mysql://localhost:3306/test
     username: root
     password: yamaha
 
-  #DB migration
   liquibase:
     url: jdbc:mysql://localhost:3306/test
     user: root
     password: yamaha
-    enabled: on
+    enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.yaml
 
-  # Server port
 server:
   port: 8081
 
-  # Mock properties for external API
 mock:
   crypto-api:
     endpoint: crypto-currency-rates
@@ -31,7 +27,6 @@ mock:
     secret-key: secret-key
     timeout: 5000
 
-  # Resilience4j configuration
 resilience4j:
   circuitbreaker:
     instances:
