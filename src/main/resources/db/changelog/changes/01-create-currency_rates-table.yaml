@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-currency-rates-table
+      author: karpo99
+      changes:
+        - createTable:
+            tableName: currency_rates
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_currency_rates
+              - column:
+                  name: currency
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rate
+                  type: DECIMAL(19,6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency_type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
